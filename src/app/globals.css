@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand palette */
+  --color-obsidian: #141210;
+  --color-espresso: #312821;
+  --color-gold: #c7a35a;
+  --color-gold-bright: #d9b76e;
+  --color-gold-ink: #7a5c26; /* accessible gold for small text on ivory */
+  --color-ivory: #f7f3eb;
+  --color-champagne: #e5d3a9;
+  --color-taupe: #d8cec0;
+  --color-stone: #5f554b; /* secondary text on ivory */
+
+  --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-sans: var(--font-manrope), "Manrope", system-ui, sans-serif;
+
+  --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-scroll-cue: scroll-cue 2.4s var(--ease-luxe) infinite;
+  --animate-line-pulse: line-pulse 2.4s ease-in-out infinite;
+  --animate-shimmer: shimmer 6s ease-in-out infinite;
+  --animate-hero-zoom: hero-zoom 14s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @keyframes hero-zoom {
+    from { transform: scale(1.12); }
+    to { transform: scale(1); }
+  }
+
+  @keyframes scroll-cue {
+    0%, 100% { transform: translateY(0); opacity: 0.6; }
+    50% { transform: translateY(8px); opacity: 1; }
+  }
+  @keyframes line-pulse {
+    0%, 100% { transform: scaleY(0.4); opacity: 0.35; transform-origin: top; }
+    50% { transform: scaleY(1); opacity: 1; transform-origin: top; }
+  }
+  @keyframes shimmer {
+    0%, 70% { background-position: 200% 0; }
+    100% { background-position: -100% 0; }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-ivory);
+    color: var(--color-obsidian);
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-champagne);
+    color: var(--color-obsidian);
+  }
+
+  :focus-visible {
+    outline: 1.5px solid var(--color-gold);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+}
+
+/* Lenis smooth-scroll recommended styles */
+html.lenis, html.lenis body { height: auto; }
+.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
+.lenis [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
+
+@layer components {
+  .container-luxe {
+    width: 100%;
+    max-width: 88rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-luxe { padding-inline: 2.5rem; }
+  }
+  @media (min-width: 1280px) {
+    .container-luxe { padding-inline: 4rem; }
+  }
+
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+  }
+
+  /* Thin gold underline that draws left → right */
+  .link-luxe {
+    background-image: linear-gradient(var(--color-gold), var(--color-gold));
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.5s var(--ease-luxe), color 0.3s;
+    padding-bottom: 2px;
+  }
+  .link-luxe:hover, .link-luxe:focus-visible, .link-luxe[aria-current="page"] {
+    background-size: 100% 1px;
+  }
+
+  /* Subtle champagne shimmer for selected words */
+  .text-shimmer {
+    background: linear-gradient(110deg, var(--color-gold) 35%, #f3e6c4 50%, var(--color-gold) 65%);
+    background-size: 250% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: var(--animate-shimmer);
+  }
+
+  /* Fine film grain for dark sections */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.07;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .vignette::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background: radial-gradient(ellipse at center, transparent 40%, rgb(20 18 16 / 0.55) 100%);
+  }
+
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .text-shimmer { animation: none; color: var(--color-gold); background: none; }
+}

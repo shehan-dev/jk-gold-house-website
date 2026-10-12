@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(node -v)",
+      "PowerShell(npm -v)",
+      "PowerShell(npm view next version; npm view tailwindcss version; npm view motion version; npm view lenis version; npm view lucide-react version; \\(Get-Command ffmpeg -ErrorAction SilentlyContinue\\).Source; \\(Get-Command curl.exe\\).Source)",
+      "Bash(mkdir -p \"/c/Users/Shehan Silva/Documents/My Projects/JK Gold House Website/public/videos\")",
+      "Bash(curl -sL -o hero.mp4 \"https://drive.usercontent.google.com/download?id=13rhsYmGrHv9nnNAhzeyd-fMnkSYgicvY&export=download&confirm=t\" -w \"%{http_code} %{content_type} %{size_download}\\\\n\")",
+      "PowerShell(npm install next@latest react@latest react-dom@latest motion lenis lucide-react 2>&1)",
+      "PowerShell(npm install -D typescript @types/react @types/react-dom @types/node tailwindcss @tailwindcss/postcss postcss 2>&1)",
+      "PowerShell(npm run build 2>&1)",
+      "PowerShell(Get-ChildItem -Recurse -Directory -Exclude node_modules,.next | Where-Object { $_.FullName -notmatch 'node_modules|\\\\.next' } | Select-Object FullName)",
+      "WebFetch(domain:www.google.com)",
+      "Bash(node reviews.mjs)",
+      "PowerShell(npx next start -p 3100)"
+    ]
+  }
+}
