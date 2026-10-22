@@ -16,7 +16,6 @@ export function GoldFeature() {
           <MaskImage image={images.goldChains} sizes="(min-width: 1024px) 28vw, 60vw" className="col-span-3 aspect-[3/4]" />
           <div className="col-span-2 flex flex-col gap-4 pt-16">
             <MaskImage image={images.crossPendant} sizes="(min-width: 1024px) 18vw, 40vw" className="aspect-[3/4]" delay={0.2} />
-            <MaskImage image={images.bangles} sizes="(min-width: 1024px) 18vw, 40vw" className="aspect-square" delay={0.35} />
           </div>
         </div>
 

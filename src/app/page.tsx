@@ -30,7 +30,7 @@ export default function HomePage() {
       <FilmSection />
       <About />
       <TrustStrip />
-      <Collections showMore={false} />
+      <Collections />
       <GoldFeature />
       <Showcase />
       <Wedding />

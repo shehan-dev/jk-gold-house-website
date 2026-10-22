@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { WhatsAppIcon } from "@/components/ui/BrandIcons";
 import { Eyebrow } from "@/components/ui/SectionHeading";
 import { weddingFeatures } from "@/lib/content";
-import { images } from "@/lib/images";
+import { images, products } from "@/lib/images";
 import { messages, whatsappHref } from "@/lib/site";
 import Image from "next/image";
 
@@ -24,12 +24,12 @@ export function Wedding({ onWeddingPage = false }: { onWeddingPage?: boolean }) 
           <div className="absolute -bottom-10 -left-4 hidden w-[42%] border-[6px] border-ivory shadow-2xl sm:block lg:-left-10">
             <Parallax className="aspect-square" axis="x" distance={10}>
               <Image
-                src={images.coffeeRing.src}
-                alt={images.coffeeRing.alt}
+                src={products.weddingBands.src}
+                alt={products.weddingBands.alt}
                 fill
                 sizes="20vw"
                 className="object-cover"
-                style={{ objectPosition: images.coffeeRing.position }}
+                style={{ objectPosition: products.weddingBands.position }}
               />
             </Parallax>
           </div>

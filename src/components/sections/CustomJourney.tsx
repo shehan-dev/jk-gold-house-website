@@ -6,10 +6,18 @@ import { Button } from "@/components/ui/Button";
 import { WhatsAppIcon } from "@/components/ui/BrandIcons";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { customJourney } from "@/lib/content";
-import { images } from "@/lib/images";
+import { products } from "@/lib/images";
 import { messages, whatsappHref } from "@/lib/site";
 
 const stepIcons = [Lightbulb, PenTool, Sparkles, Gem];
+const customPieces = [
+  products.namePendant,
+  products.nameBraceletHeart,
+  products.airplanePendant,
+  products.kanjiPendant,
+  products.nameKada,
+  products.nameNecklaceScript,
+];
 const highlights = ["Custom designs", "Personalised jewellery", "Individual consultations", "Special occasions", "Wedding designs", "Unique pieces"];
 
 export function CustomJourney() {
@@ -55,21 +63,32 @@ export function CustomJourney() {
                   </div>
                   <h3 className="mt-6 text-3xl">{s.title}</h3>
                   <p className="mt-3 max-w-xs leading-relaxed text-stone">{s.description}</p>
-                  {i === customJourney.length - 1 && (
-                    <div className="relative mt-6 aspect-[4/3] overflow-hidden">
-                      <Image
-                        src={images.leafNecklace.src}
-                        alt="A finished custom gold necklace by JK Gold House"
-                        fill
-                        sizes="(min-width: 1024px) 22vw, 90vw"
-                        className="object-cover"
-                        style={{ objectPosition: images.leafNecklace.position }}
-                      />
-                    </div>
-                  )}
                 </StaggerItem>
               );
             })}
+          </Stagger>
+        </div>
+
+        {/* Real custom pieces made by JK Gold House */}
+        <div className="mt-20">
+          <Reveal>
+            <p className="eyebrow text-gold-ink">Made for our customers</p>
+          </Reveal>
+          <Stagger className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-6" stagger={0.08}>
+            {customPieces.map((img) => (
+              <StaggerItem key={img.src}>
+                <div className="group relative aspect-[4/5] overflow-hidden bg-taupe">
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    fill
+                    sizes="(min-width: 1024px) 15vw, (min-width: 768px) 30vw, 48vw"
+                    className="object-cover transition-transform duration-1400 ease-luxe group-hover:scale-[1.05]"
+                    style={{ objectPosition: img.position }}
+                  />
+                </div>
+              </StaggerItem>
+            ))}
           </Stagger>
         </div>
 

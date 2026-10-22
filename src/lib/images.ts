@@ -57,7 +57,73 @@ export const images = {
   leafNecklace: still("leaf-necklace", "Sculptural gold necklace with matching gold ring", "72% 50%"),
   necklaceWhite: still("necklace-white", "Bride-inspired portrait with gold necklace and bangles", "40% 45%"),
   sunsetProfile: still("sunset-profile", "Silhouette wearing a gold necklace at sunset", "42% 40%"),
-  coffeeRing: still("coffee-ring", "Sapphire engagement-style ring worn while holding a cup", "60% 50%"),
+} satisfies Record<string, SiteImage>;
+
+/** JK Gold House product photography — public/images/collection/ */
+const piece = (file: string, alt: string, width: number, height: number, position = "50% 55%"): SiteImage => ({
+  src: `/images/collection/${file}.jpg`,
+  alt,
+  width,
+  height,
+  position,
+});
+
+export const products = {
+  // Rings
+  filigreeRing: piece("filigree-ring-model", "Gold filigree ring set with sparkling stones, worn on the hand", 1080, 1160, "50% 60%"),
+  weddingBands: piece("wedding-bands", "A pair of polished gold wedding bands with diagonal detailing", 1280, 1010, "50% 50%"),
+  weddingBandsPair: piece("wedding-bands-pair", "Matching gold wedding bands", 1280, 667, "50% 50%"),
+  twoToneCoupleRings: piece("two-tone-couple-rings", "Two-tone gold couple rings set with solitaire stones", 1280, 960, "50% 50%"),
+  twoToneCoupleRings2: piece("two-tone-couple-rings-2", "Two-tone gold and white gold couple rings with stones", 1280, 960, "50% 50%"),
+  mensStoneRings: piece("mens-stone-rings", "Men’s gold rings set with single stones", 960, 1280, "50% 50%"),
+  gemstoneRingBox: piece("gemstone-ring-box", "Gold ring with a deep red gemstone in a JK Gold House box", 960, 1280, "50% 55%"),
+
+  // Bangles & bracelets
+  heartBangle: piece("heart-bangle", "Slim gold bangle with a polished heart", 960, 1280, "50% 50%"),
+  waveBracelet: piece("wave-bracelet-model", "Wave-shaped gold bracelet with a line of sparkling stones", 1080, 1160, "55% 68%"),
+  screwBangle: piece("screw-bangle", "Engraved gold bangle with screw motifs", 1280, 960, "50% 50%"),
+  kadaBangle: piece("kada-bangle", "Ornate gold kada bangle with a symbolic centrepiece", 1280, 1256, "50% 50%"),
+  nameKada: piece("name-kada", "Gold kada bracelet with an engraved name plate", 950, 1280, "50% 45%"),
+  mensCurbBracelet: piece("mens-curb-bracelet", "Heavy men’s gold curb bracelet", 800, 800, "50% 50%"),
+  mensLinkBracelet: piece("mens-link-bracelet", "Men’s gold link bracelet", 960, 1280, "50% 55%"),
+  mensLinkBraceletWide: piece("mens-link-bracelet-wide", "Men’s two-tone gold link bracelet", 1280, 960, "50% 50%"),
+  beadBracelet: piece("bead-bracelet", "Bead bracelet with gold caps", 960, 1280, "50% 40%"),
+
+  // Chains
+  cubanChain: piece("cuban-chain", "Heavy gold Cuban link chain", 960, 1280, "50% 50%"),
+  cubanChainSet: piece("cuban-chain-bracelet-set", "Gold Cuban link chain with matching bracelet", 960, 1280, "50% 50%"),
+  ropeChain: piece("rope-chain", "Gold chain displayed on a neck stand", 960, 1280, "50% 50%"),
+  francoChain: piece("franco-chain", "Thick gold Franco chain on a display bust", 960, 1280, "50% 55%"),
+  curbChain: piece("curb-chain", "Gold curb chain on a display bust", 630, 1024, "50% 55%"),
+
+  // Pendants & necklaces
+  geometricNecklace: piece("geometric-necklace", "Modern gold necklace with a geometric stone-set pendant", 960, 1280, "50% 50%"),
+  blueTopazPendant: piece("blue-topaz-pendant", "Gold pendant set with a blue topaz on a gold chain", 960, 1280, "50% 55%"),
+  navaratnaPendant: piece("navaratna-pendant", "Gold pendant set with coloured gemstones", 960, 1280, "50% 55%"),
+  rainbowPendant: piece("rainbow-circle-pendant", "Gold circle pendant set with rainbow gemstones", 960, 1280, "50% 60%"),
+  barPendant: piece("bar-pendant-chain", "Gold bar pendant on a fine chain", 960, 1280, "50% 55%"),
+  bulletPendant: piece("bullet-pendant", "Polished gold bullet pendant on a chain", 1280, 1232, "50% 55%"),
+  mensBarPendant: piece("mens-bar-pendant", "Men’s gold bar pendant", 994, 1280, "50% 50%"),
+  figaroPendant: piece("figaro-chain-pendant", "Gold Figaro chain with a bar pendant", 960, 1280, "50% 55%"),
+  hornPendant: piece("horn-pendant", "Gold-capped black horn pendant on a gold chain", 960, 1280, "50% 55%"),
+  tuskPendant: piece("tusk-pendant", "Gold tusk pendant on a gold chain", 960, 1280, "50% 60%"),
+  conchPendant: piece("conch-pendant", "Gold conch shell pendant", 960, 1280, "50% 45%"),
+  trebleClefPendant: piece("treble-clef-pendant", "Gold treble clef pendant", 960, 1280, "50% 55%"),
+  babyFeetPendant: piece("baby-feet-pendant", "Gold pendant engraved with baby footprints", 960, 1280, "50% 60%"),
+
+  // Personalised / custom
+  namePendant: piece("name-pendant", "Personalised gold name bar pendant", 960, 1280, "50% 55%"),
+  nameNecklace: piece("name-necklace", "Personalised gold name necklace", 960, 1280, "50% 50%"),
+  nameNecklaceScript: piece("name-necklace-script", "Gold script name necklace on a display bust", 960, 1280, "50% 55%"),
+  nameBraceletHeart: piece("name-bracelet-heart", "Personalised gold name bracelet with a heart charm", 960, 1280, "50% 50%"),
+  nameBraceletChild: piece("name-bracelet-child", "Personalised children’s gold name bracelet", 960, 1280, "50% 55%"),
+  airplanePendant: piece("airplane-pendant", "Custom gold airplane pendant", 760, 689, "50% 50%"),
+  kanjiPendant: piece("kanji-bar-pendant", "Custom gold bar pendant engraved with Japanese characters", 894, 1280, "50% 50%"),
+
+  // Gemstone sets
+  amethystSet: piece("amethyst-set", "Gold amethyst ring, earrings and pendant set", 768, 1024, "50% 50%"),
+  peridotSet: piece("peridot-set", "Gold peridot ring, earrings and pendant set", 768, 1024, "50% 50%"),
+  topazSet: piece("topaz-set", "Gold blue topaz ring, earrings and pendant set", 768, 1024, "50% 50%"),
 } satisfies Record<string, SiteImage>;
 
 /** Hero slides: landscape image for desktop/tablet, portrait image for phones. */

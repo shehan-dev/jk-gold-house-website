@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Reveal } from "@/components/motion/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Button } from "@/components/ui/Button";
 import { gallery, galleryCategories, type GalleryItem } from "@/lib/content";
 import { setScrollLocked } from "@/components/layout/Providers";
 
@@ -16,14 +17,20 @@ const shapes: Record<GalleryItem["shape"], string> = {
   square: "aspect-square",
 };
 
+const PAGE_SIZE = 16;
+
+/** `limit` shows a fixed preview (home page); otherwise images load in pages of 16. */
 export function Gallery({ limit, filters = true }: { limit?: number; filters?: boolean }) {
   const [category, setCategory] = useState<(typeof galleryCategories)[number]>("All");
+  const [visible, setVisible] = useState(PAGE_SIZE);
   const [lightbox, setLightbox] = useState<number | null>(null);
 
-  const items = useMemo(() => {
-    const filtered = category === "All" ? gallery : gallery.filter((g) => g.category === category);
-    return limit ? filtered.slice(0, limit) : filtered;
-  }, [category, limit]);
+  const filtered = useMemo(
+    () => (category === "All" ? gallery : gallery.filter((g) => g.category === category)),
+    [category],
+  );
+  const items = filtered.slice(0, limit ?? visible);
+  const hasMore = !limit && items.length < filtered.length;
 
   return (
     <section id="gallery" className="bg-ivory py-24 sm:py-32 lg:py-40">
@@ -37,7 +44,10 @@ export function Gallery({ limit, filters = true }: { limit?: number; filters?: b
                 <button
                   key={c}
                   type="button"
-                  onClick={() => setCategory(c)}
+                  onClick={() => {
+                    setCategory(c);
+                    setVisible(PAGE_SIZE);
+                  }}
                   aria-pressed={category === c}
                   className={`shrink-0 border px-4 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.18em] transition-colors duration-500 ${
                     category === c
@@ -85,11 +95,34 @@ export function Gallery({ limit, filters = true }: { limit?: number; filters?: b
               </motion.li>
             ))}
         </ul>
+
+        {hasMore && (
+          <div className="mt-12 flex flex-col items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setVisible((v) => v + PAGE_SIZE)}
+              className="inline-flex min-h-12 items-center justify-center border border-obsidian/25 px-8 py-3.5 text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-obsidian transition-all duration-500 ease-luxe hover:border-gold hover:bg-obsidian hover:text-ivory"
+            >
+              Load more
+            </button>
+            <p className="text-xs text-stone">
+              Showing {items.length} of {filtered.length}
+            </p>
+          </div>
+        )}
+
+        {limit && (
+          <div className="mt-12 flex justify-center">
+            <Button href="/gallery" variant="outline-dark">
+              View full gallery
+            </Button>
+          </div>
+        )}
       </div>
 
       <AnimatePresence>
         {lightbox !== null && (
-          <Lightbox items={items} index={lightbox} onIndex={setLightbox} onClose={() => setLightbox(null)} />
+          <Lightbox items={filtered} index={lightbox} onIndex={setLightbox} onClose={() => setLightbox(null)} />
         )}
       </AnimatePresence>
     </section>

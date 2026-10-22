@@ -1,4 +1,4 @@
-import { images, type SiteImage } from "./images";
+import { images, products, type SiteImage } from "./images";
 
 export type Collection = {
   slug: string;
@@ -16,19 +16,19 @@ export const featuredCollections: Collection[] = [
   { slug: "rings", name: "Rings", description: "Everyday gold bands to stone-set statement rings.", image: images.ringsCup },
   { slug: "gold-chains", name: "Gold Chains", description: "Finely made chains in 22K and 18K gold.", image: images.goldChains },
   { slug: "pendants", name: "Pendants", description: "Meaningful pendants that sit close to the heart.", image: images.pendantLight },
-  { slug: "bracelets", name: "Bracelets", description: "Fine gold bracelets and bangle cuffs for daily wear.", image: images.handsRings },
-  { slug: "bangles", name: "Bangles", description: "Traditional and contemporary gold bangles, worn alone or stacked.", image: images.bangles },
+  { slug: "bracelets", name: "Bracelets", description: "Fine gold bracelets and bangle cuffs for daily wear.", image: products.waveBracelet },
+  { slug: "bangles", name: "Bangles", description: "Traditional and contemporary gold bangles, worn alone or stacked.", image: products.heartBangle },
   { slug: "wedding-jewellery", name: "Wedding Jewellery", description: "Bridal sets and heirloom pieces for the day itself.", image: images.leafNecklace },
-  { slug: "engagement-rings", name: "Engagement Rings", description: "Rings chosen for the question that changes everything.", image: images.coffeeRing },
+  { slug: "engagement-rings", name: "Engagement Rings", description: "Rings chosen for the question that changes everything.", image: products.filigreeRing },
 ];
 
-/** Remaining collections, presented as an editorial index. */
-export const moreCollections: { name: string; description: string }[] = [
-  { name: "Gemstone Jewellery", description: "Sapphires and precious stones set in gold" },
-  { name: "Earrings", description: "Studs, drops and traditional designs" },
-  { name: "Children’s Jewellery", description: "First gold for little ones" },
-  { name: "Men’s Jewellery", description: "Chains, rings and bracelets" },
-  { name: "Custom Jewellery", description: "Designed around your idea" },
+/** Remaining collections — shown as smaller tiles (with an image) or a text link (without). */
+export const moreCollections: { name: string; description: string; image?: SiteImage }[] = [
+  { name: "Gemstone Jewellery", description: "Topaz, amethyst and precious stones set in gold", image: products.blueTopazPendant },
+  { name: "Earrings", description: "Studs, drops and matching sets", image: products.peridotSet },
+  { name: "Men’s Jewellery", description: "Chains, rings, kadas and bracelets", image: products.cubanChainSet },
+  { name: "Children’s Jewellery", description: "First gold for little ones", image: products.babyFeetPendant },
+  { name: "Custom Jewellery", description: "Name pieces and designs made around your idea", image: products.namePendant },
   { name: "Silver Jewellery", description: "Elegant pieces in silver" },
 ];
 
@@ -78,9 +78,11 @@ export type GalleryItem = SiteImage & {
 export const galleryCategories = [
   "All",
   "Gold Jewellery",
-  "Wedding Jewellery",
-  "Engagement Rings",
+  "Wedding & Engagement",
+  "Gemstones",
+  "Men’s Jewellery",
   "Custom Designs",
+  "Children’s Jewellery",
   "New Arrivals",
   "Store",
 ] as const;
@@ -88,22 +90,62 @@ export type GalleryCategory = Exclude<(typeof galleryCategories)[number], "All">
 
 // The home page shows the first 10 — keep the strongest images at the top.
 export const gallery: GalleryItem[] = [
-  { ...images.pendantEarring, category: "New Arrivals", shape: "tall" },
+  { ...products.waveBracelet, category: "New Arrivals", shape: "tall" },
+  { ...products.twoToneCoupleRings, category: "Wedding & Engagement", shape: "landscape" },
+  { ...images.pendantEarring, category: "New Arrivals", shape: "portrait" },
+  { ...products.geometricNecklace, category: "Gold Jewellery", shape: "portrait" },
+  { ...products.topazSet, category: "Gemstones", shape: "portrait" },
+  { ...products.filigreeRing, category: "Wedding & Engagement", shape: "tall" },
   { ...images.storefrontStreet, category: "Store", shape: "landscape" },
+  { ...products.kadaBangle, category: "Gold Jewellery", shape: "square" },
+  { ...images.goldChains, category: "Men’s Jewellery", shape: "portrait" },
+  { ...products.blueTopazPendant, category: "Gemstones", shape: "portrait" },
+
+  { ...products.weddingBands, category: "Wedding & Engagement", shape: "landscape" },
+  { ...products.namePendant, category: "Custom Designs", shape: "portrait" },
+  { ...products.cubanChainSet, category: "Men’s Jewellery", shape: "portrait" },
+  { ...products.heartBangle, category: "Gold Jewellery", shape: "portrait" },
   { ...images.handsRings, category: "Gold Jewellery", shape: "portrait" },
-  { ...images.goldChains, category: "Gold Jewellery", shape: "tall" },
-  { ...images.ringsCup, category: "New Arrivals", shape: "portrait" },
+  { ...products.amethystSet, category: "Gemstones", shape: "portrait" },
+  { ...products.airplanePendant, category: "Custom Designs", shape: "square" },
+  { ...products.babyFeetPendant, category: "Children’s Jewellery", shape: "portrait" },
   { ...images.consultation, category: "Store", shape: "landscape" },
-  { ...images.pendantLight, category: "New Arrivals", shape: "portrait" },
-  { ...images.leafNecklace, category: "Custom Designs", shape: "square" },
-  { ...images.crossPendant, category: "Gold Jewellery", shape: "portrait" },
+  { ...products.navaratnaPendant, category: "Gemstones", shape: "portrait" },
+  { ...products.mensStoneRings, category: "Men’s Jewellery", shape: "portrait" },
+  { ...products.twoToneCoupleRings2, category: "Wedding & Engagement", shape: "landscape" },
+  { ...products.nameBraceletChild, category: "Children’s Jewellery", shape: "portrait" },
+  { ...images.ringsCup, category: "New Arrivals", shape: "portrait" },
+  { ...products.rainbowPendant, category: "Gemstones", shape: "portrait" },
+  { ...products.screwBangle, category: "Gold Jewellery", shape: "landscape" },
+  { ...products.kanjiPendant, category: "Custom Designs", shape: "portrait" },
+  { ...products.cubanChain, category: "Men’s Jewellery", shape: "portrait" },
+  { ...products.peridotSet, category: "Gemstones", shape: "portrait" },
+  { ...products.nameNecklaceScript, category: "Custom Designs", shape: "portrait" },
   { ...images.team, category: "Store", shape: "landscape" },
-  { ...images.sapphireRing, category: "Engagement Rings", shape: "square" },
-  { ...images.necklaceWhite, category: "Wedding Jewellery", shape: "tall" },
-  { ...images.profileNecklace, category: "Wedding Jewellery", shape: "portrait" },
-  { ...images.coffeeRing, category: "Engagement Rings", shape: "landscape" },
-  { ...images.bangles, category: "Gold Jewellery", shape: "portrait" },
-  { ...images.necklaceSea, category: "Gold Jewellery", shape: "portrait" },
+  { ...products.conchPendant, category: "Gold Jewellery", shape: "portrait" },
+  { ...products.gemstoneRingBox, category: "Gemstones", shape: "portrait" },
+  { ...products.mensLinkBracelet, category: "Men’s Jewellery", shape: "portrait" },
+  { ...products.nameBraceletHeart, category: "Children’s Jewellery", shape: "portrait" },
+  { ...products.weddingBandsPair, category: "Wedding & Engagement", shape: "landscape" },
+  { ...images.pendantLight, category: "New Arrivals", shape: "portrait" },
+  { ...products.francoChain, category: "Men’s Jewellery", shape: "portrait" },
+  { ...products.nameKada, category: "Custom Designs", shape: "portrait" },
+  { ...products.tuskPendant, category: "Gold Jewellery", shape: "portrait" },
+  { ...products.bulletPendant, category: "Men’s Jewellery", shape: "square" },
+  { ...products.trebleClefPendant, category: "Gold Jewellery", shape: "portrait" },
+  { ...products.mensCurbBracelet, category: "Men’s Jewellery", shape: "square" },
+  { ...products.hornPendant, category: "Gold Jewellery", shape: "portrait" },
+  { ...products.nameNecklace, category: "Custom Designs", shape: "portrait" },
+  { ...products.figaroPendant, category: "Men’s Jewellery", shape: "portrait" },
+  { ...products.barPendant, category: "Gold Jewellery", shape: "portrait" },
+  { ...products.mensBarPendant, category: "Men’s Jewellery", shape: "portrait" },
+  { ...products.beadBracelet, category: "Men’s Jewellery", shape: "portrait" },
+  { ...products.ropeChain, category: "Gold Jewellery", shape: "portrait" },
+  { ...products.curbChain, category: "Men’s Jewellery", shape: "portrait" },
+  { ...products.mensLinkBraceletWide, category: "Men’s Jewellery", shape: "landscape" },
+  { ...images.crossPendant, category: "Gold Jewellery", shape: "portrait" },
+  { ...images.necklaceWhite, category: "Wedding & Engagement", shape: "tall" },
+  { ...images.sapphireRing, category: "Wedding & Engagement", shape: "square" },
 ];
 
 export const socialPosts = [

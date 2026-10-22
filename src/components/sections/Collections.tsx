@@ -51,37 +51,82 @@ export function Collections({ enquire = false, showMore = true }: { enquire?: bo
         </Stagger>
 
         {showMore && (
-          <div className="mt-20 grid gap-10 lg:grid-cols-12">
-            <Reveal className="lg:col-span-4">
-              <p className="eyebrow text-gold-ink">Also at JK Gold House</p>
-              <p className="mt-4 font-serif text-3xl leading-tight">
-                Jewellery chosen for moments that matter.
-              </p>
+          <div className="mt-20">
+            <Reveal className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+              <div>
+                <p className="eyebrow text-gold-ink">Also at JK Gold House</p>
+                <p className="mt-4 font-serif text-3xl leading-tight">Jewellery chosen for moments that matter.</p>
+              </div>
             </Reveal>
-            <ul className="border-t border-obsidian/10 lg:col-span-8">
-              {moreCollections.map((c, i) => (
-                <Reveal as="li" key={c.name} delay={i * 0.05} y={14} className="border-b border-obsidian/10">
-                  <a
-                    href={whatsappHref(messages.category(c.name))}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-center justify-between gap-6 py-5 transition-colors"
-                  >
-                    <span className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-6">
-                      <span className="font-serif text-2xl text-obsidian transition-colors duration-500 group-hover:text-gold-ink sm:text-3xl">
-                        {c.name}
+
+            {/* Smaller image tiles */}
+            <Stagger className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-5" stagger={0.07}>
+              {moreCollections
+                .filter((c) => c.image)
+                .map((c) => (
+                  <StaggerItem key={c.name}>
+                    <a
+                      href={whatsappHref(messages.category(c.name))}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Enquire about ${c.name} on WhatsApp`}
+                      className="group block"
+                    >
+                      <span className="relative block aspect-[4/5] overflow-hidden bg-taupe">
+                        <Image
+                          src={c.image!.src}
+                          alt={c.image!.alt}
+                          fill
+                          sizes="(min-width: 1024px) 18vw, (min-width: 768px) 30vw, 48vw"
+                          className="object-cover transition-transform duration-1400 ease-luxe group-hover:scale-[1.05]"
+                          style={{ objectPosition: c.image!.position }}
+                        />
                       </span>
-                      <span className="text-sm text-stone">{c.description}</span>
-                    </span>
-                    <ArrowUpRight
-                      className="size-5 shrink-0 text-gold-ink transition-transform duration-500 ease-luxe group-hover:translate-x-1 group-hover:-translate-y-1"
-                      strokeWidth={1.25}
-                      aria-hidden
-                    />
-                    <span className="sr-only">(enquire on WhatsApp)</span>
-                  </a>
-                </Reveal>
-              ))}
+                      <span className="mt-4 flex items-start justify-between gap-3">
+                        <span>
+                          <span className="block font-serif text-xl leading-tight text-obsidian transition-colors duration-500 group-hover:text-gold-ink sm:text-2xl">
+                            {c.name}
+                          </span>
+                          <span className="mt-1 block text-sm leading-snug text-stone">{c.description}</span>
+                        </span>
+                        <ArrowUpRight
+                          className="mt-1 size-4 shrink-0 text-gold-ink transition-transform duration-500 ease-luxe group-hover:translate-x-1 group-hover:-translate-y-1"
+                          strokeWidth={1.25}
+                          aria-hidden
+                        />
+                      </span>
+                    </a>
+                  </StaggerItem>
+                ))}
+            </Stagger>
+
+            {/* Collections without photography yet */}
+            <ul className="mt-12 border-t border-obsidian/10">
+              {moreCollections
+                .filter((c) => !c.image)
+                .map((c) => (
+                  <li key={c.name} className="border-b border-obsidian/10">
+                    <a
+                      href={whatsappHref(messages.category(c.name))}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center justify-between gap-6 py-5"
+                    >
+                      <span className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-6">
+                        <span className="font-serif text-2xl text-obsidian transition-colors duration-500 group-hover:text-gold-ink">
+                          {c.name}
+                        </span>
+                        <span className="text-sm text-stone">{c.description}</span>
+                      </span>
+                      <ArrowUpRight
+                        className="size-5 shrink-0 text-gold-ink transition-transform duration-500 ease-luxe group-hover:translate-x-1 group-hover:-translate-y-1"
+                        strokeWidth={1.25}
+                        aria-hidden
+                      />
+                      <span className="sr-only">(enquire on WhatsApp)</span>
+                    </a>
+                  </li>
+                ))}
             </ul>
           </div>
         )}
