@@ -15,7 +15,7 @@ const customPieces = [
   products.nameBraceletHeart,
   products.airplanePendant,
   products.kanjiPendant,
-  products.nameKada,
+  products.nameNecklace,
   products.nameNecklaceScript,
 ];
 const highlights = ["Custom designs", "Personalised jewellery", "Individual consultations", "Special occasions", "Wedding designs", "Unique pieces"];

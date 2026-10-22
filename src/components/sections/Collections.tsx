@@ -63,8 +63,9 @@ export function Collections({ enquire = false, showMore = true }: { enquire?: bo
             <Stagger className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-5" stagger={0.07}>
               {moreCollections
                 .filter((c) => c.image)
-                .map((c) => (
-                  <StaggerItem key={c.name}>
+                .map((c, i, all) => (
+                  // An odd last tile spans the full width on phones
+                  <StaggerItem key={c.name} className={all.length % 2 === 1 && i === all.length - 1 ? "col-span-2 md:col-span-1" : ""}>
                     <a
                       href={whatsappHref(messages.category(c.name))}
                       target="_blank"
@@ -72,7 +73,11 @@ export function Collections({ enquire = false, showMore = true }: { enquire?: bo
                       aria-label={`Enquire about ${c.name} on WhatsApp`}
                       className="group block"
                     >
-                      <span className="relative block aspect-[4/5] overflow-hidden bg-taupe">
+                      <span
+                        className={`relative block overflow-hidden bg-taupe ${
+                          all.length % 2 === 1 && i === all.length - 1 ? "aspect-[16/10] md:aspect-[4/5]" : "aspect-[4/5]"
+                        }`}
+                      >
                         <Image
                           src={c.image!.src}
                           alt={c.image!.alt}

@@ -18,7 +18,7 @@ export const featuredCollections: Collection[] = [
   { slug: "pendants", name: "Pendants", description: "Meaningful pendants that sit close to the heart.", image: images.pendantLight },
   { slug: "bracelets", name: "Bracelets", description: "Fine gold bracelets and bangle cuffs for daily wear.", image: products.waveBracelet },
   { slug: "bangles", name: "Bangles", description: "Traditional and contemporary gold bangles, worn alone or stacked.", image: products.heartBangle },
-  { slug: "wedding-jewellery", name: "Wedding Jewellery", description: "Bridal sets and heirloom pieces for the day itself.", image: images.leafNecklace },
+  { slug: "wedding-jewellery", name: "Wedding Jewellery", description: "Wedding bands, bridal sets and heirloom pieces for the day itself.", image: products.weddingBands },
   { slug: "engagement-rings", name: "Engagement Rings", description: "Rings chosen for the question that changes everything.", image: products.filigreeRing },
 ];
 

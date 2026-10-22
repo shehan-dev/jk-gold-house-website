@@ -83,7 +83,7 @@ export const products = {
   waveBracelet: piece("wave-bracelet-model", "Wave-shaped gold bracelet with a line of sparkling stones", 1080, 1160, "55% 68%"),
   screwBangle: piece("screw-bangle", "Engraved gold bangle with screw motifs", 1280, 960, "50% 50%"),
   kadaBangle: piece("kada-bangle", "Ornate gold kada bangle with a symbolic centrepiece", 1280, 1256, "50% 50%"),
-  nameKada: piece("name-kada", "Gold kada bracelet with an engraved name plate", 950, 1280, "50% 45%"),
+  nameKada: piece("name-kada", "Gold kada bracelet with an engraved name plate", 950, 1280, "50% 30%"),
   mensCurbBracelet: piece("mens-curb-bracelet", "Heavy men’s gold curb bracelet", 800, 800, "50% 50%"),
   mensLinkBracelet: piece("mens-link-bracelet", "Men’s gold link bracelet", 960, 1280, "50% 55%"),
   mensLinkBraceletWide: piece("mens-link-bracelet-wide", "Men’s two-tone gold link bracelet", 1280, 960, "50% 50%"),

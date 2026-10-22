@@ -24,12 +24,12 @@ export function Wedding({ onWeddingPage = false }: { onWeddingPage?: boolean }) 
           <div className="absolute -bottom-10 -left-4 hidden w-[42%] border-[6px] border-ivory shadow-2xl sm:block lg:-left-10">
             <Parallax className="aspect-square" axis="x" distance={10}>
               <Image
-                src={products.weddingBands.src}
-                alt={products.weddingBands.alt}
+                src={products.twoToneCoupleRings.src}
+                alt={products.twoToneCoupleRings.alt}
                 fill
                 sizes="20vw"
                 className="object-cover"
-                style={{ objectPosition: products.weddingBands.position }}
+                style={{ objectPosition: products.twoToneCoupleRings.position }}
               />
             </Parallax>
           </div>
