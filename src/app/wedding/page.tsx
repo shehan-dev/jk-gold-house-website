@@ -25,7 +25,7 @@ export default function WeddingPage() {
           </>
         }
         intro="Engagement rings, bridal sets and traditional gold jewellery — chosen with you, for the most meaningful day."
-        image={images.necklaceWhite}
+        image={images.pendantEarringWide}
       />
       <Wedding onWeddingPage />
       <Showcase

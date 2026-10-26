@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Clock, MapPin, Phone } from "lucide-react";
 import { FacebookIcon, InstagramIcon, TikTokIcon, WhatsAppIcon } from "@/components/ui/BrandIcons";
-import { messages, site, telHref, whatsappHref } from "@/lib/site";
+import { messages, site, telHref, whatsappEnabled, whatsappHref } from "@/lib/site";
 
 const footerLinks = [
   { href: "/", label: "Home" },
@@ -35,9 +35,11 @@ export function Footer() {
             <SocialLink href={site.social.tiktok} label="TikTok">
               <TikTokIcon />
             </SocialLink>
-            <SocialLink href={whatsappHref(messages.general)} label="WhatsApp">
-              <WhatsAppIcon />
-            </SocialLink>
+            {whatsappEnabled && (
+              <SocialLink href={whatsappHref(messages.general)} label="WhatsApp">
+                <WhatsAppIcon />
+              </SocialLink>
+            )}
           </div>
         </div>
 
@@ -75,12 +77,14 @@ export function Footer() {
                 {site.phoneDisplay}
               </a>
             </li>
-            <li className="flex gap-4">
-              <WhatsAppIcon className="mt-0.5 size-4 shrink-0 text-gold" />
-              <a href={whatsappHref(messages.general)} target="_blank" rel="noopener noreferrer" className="link-luxe text-ivory">
-                {site.whatsappDisplay} (WhatsApp)
-              </a>
-            </li>
+            {whatsappEnabled && (
+              <li className="flex gap-4">
+                <WhatsAppIcon className="mt-0.5 size-4 shrink-0 text-gold" />
+                <a href={whatsappHref(messages.general)} target="_blank" rel="noopener noreferrer" className="link-luxe text-ivory">
+                  {site.whatsappDisplay} (WhatsApp)
+                </a>
+              </li>
+            )}
             <li className="flex gap-4">
               <Clock className="mt-0.5 size-4 shrink-0 text-gold" strokeWidth={1.5} aria-hidden />
               <div>

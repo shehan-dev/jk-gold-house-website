@@ -9,7 +9,7 @@ import { images } from "@/lib/images";
 export const metadata: Metadata = {
   title: "Contact & Visit Our Negombo Store",
   description:
-    "Contact JK Gold House in Negombo by WhatsApp or phone for today’s gold price, jewellery enquiries, opening hours and directions.",
+    "Contact JK Gold House in Negombo by phone or Facebook for jewellery enquiries, today’s gold price, opening hours and directions.",
   alternates: { canonical: "/contact" },
 };
 

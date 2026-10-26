@@ -36,7 +36,6 @@ export const images = {
   // People & store
   founder: photo("jagath-mendis", "Jagath Mendis, founder and owner of JK Gold House", 500, 625, "50% 30%"),
   storefrontStreet: photo("storefront-street", "JK Gold House on Colombo Road, Negombo", 680, 273, "62% 50%"),
-  team: photo("team", "The JK Gold House team inside the Negombo showroom", 680, 306, "45% 50%"),
   consultation: photo("consultation", "A JK Gold House jeweller presenting necklaces to a customer", 680, 306, "60% 50%"),
 
   // Product photography
@@ -55,7 +54,6 @@ export const images = {
   profileNecklace: still("profile-necklace", "Woman wearing a delicate gold necklace at golden hour", "44% 40%"),
   necklaceSea: still("necklace-sea", "Gold leaf necklace and ring photographed by the sea", "20% 50%"),
   leafNecklace: still("leaf-necklace", "Sculptural gold necklace with matching gold ring", "72% 50%"),
-  necklaceWhite: still("necklace-white", "Bride-inspired portrait with gold necklace and bangles", "40% 45%"),
   sunsetProfile: still("sunset-profile", "Silhouette wearing a gold necklace at sunset", "42% 40%"),
 } satisfies Record<string, SiteImage>;
 
@@ -70,6 +68,10 @@ const piece = (file: string, alt: string, width: number, height: number, positio
 
 export const products = {
   // Rings
+  bridalNecklace: piece("filigree-bridal-necklace", "Gold filigree bridal necklace with a heart-shaped stone-set pendant", 960, 1280, "50% 50%"),
+  stoneWeddingBands: piece("stone-wedding-bands", "A pair of textured gold wedding bands, each set with a stone", 1142, 1085, "50% 50%"),
+  baguetteRing: piece("baguette-ring", "Gold ring set with baguette-cut stones", 1280, 991, "45% 55%"),
+  cageRing: piece("cage-ring", "Wide gold cage-design ring with stone-set bars", 960, 1280, "50% 55%"),
   filigreeRing: piece("filigree-ring-model", "Gold filigree ring set with sparkling stones, worn on the hand", 1080, 1160, "50% 60%"),
   weddingBands: piece("wedding-bands", "A pair of polished gold wedding bands with diagonal detailing", 1280, 1010, "50% 50%"),
   weddingBandsPair: piece("wedding-bands-pair", "Matching gold wedding bands", 1280, 667, "50% 50%"),

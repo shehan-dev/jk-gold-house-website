@@ -26,7 +26,7 @@ export default function AboutPage() {
             A legacy built <em className="font-normal text-champagne">on trust.</em>
           </>
         }
-        intro="For more than 35 years, JK Gold House has helped families in Negombo celebrate life’s moments in gold."
+        intro="For more than 35 years, JK Gold House has helped families in Sri Lanka celebrate life’s moments in gold."
         image={images.pendantEarringWide}
       />
       <About showLink={false} />

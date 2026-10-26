@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { FacebookIcon, InstagramIcon, TikTokIcon, WhatsAppIcon } from "@/components/ui/BrandIcons";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { images } from "@/lib/images";
-import { directionsHref, mapEmbedSrc, messages, site, telHref, whatsappHref } from "@/lib/site";
+import { directionsHref, mapEmbedSrc, messages, site, telHref, whatsappEnabled, whatsappHref } from "@/lib/site";
 
 export function StoreVisit() {
   return (
@@ -36,11 +36,13 @@ export function StoreVisit() {
                   {site.phoneDisplay}
                 </a>
               </InfoRow>
-              <InfoRow icon={<WhatsAppIcon className="size-4" />} label="WhatsApp">
-                <a href={whatsappHref(messages.general)} target="_blank" rel="noopener noreferrer" className="link-luxe">
-                  {site.whatsappDisplay}
-                </a>
-              </InfoRow>
+              {whatsappEnabled && (
+                <InfoRow icon={<WhatsAppIcon className="size-4" />} label="WhatsApp">
+                  <a href={whatsappHref(messages.general)} target="_blank" rel="noopener noreferrer" className="link-luxe">
+                    {site.whatsappDisplay}
+                  </a>
+                </InfoRow>
+              )}
               <InfoRow icon={<Clock className="size-4" strokeWidth={1.5} />} label="Opening hours">
                 {site.hours.map((h) => (
                   <p key={h.label}>
@@ -68,8 +70,8 @@ export function StoreVisit() {
             <Button href={directionsHref} variant="dark" icon={<MapPin className="size-4" strokeWidth={1.5} />}>
               Get Directions
             </Button>
-            <Button href={whatsappHref(messages.general)} variant="outline-dark">
-              Contact Us
+            <Button href={telHref} variant="outline-dark" icon={<Phone className="size-4" strokeWidth={1.5} />} arrow={false}>
+              Call Us
             </Button>
           </Reveal>
         </div>
@@ -85,13 +87,16 @@ export function StoreVisit() {
               allowFullScreen
             />
           </Reveal>
-          <div className="grid grid-cols-2 gap-4">
-            {[images.storefrontStreet, images.team].map((img, i) => (
-              <Reveal key={img.src} delay={0.1 + i * 0.1} className="relative aspect-video overflow-hidden">
-                <Image src={img.src} alt={img.alt} fill sizes="(min-width: 1024px) 28vw, 50vw" className="object-cover" style={{ objectPosition: img.position }} />
-              </Reveal>
-            ))}
-          </div>
+          <Reveal delay={0.1} className="relative aspect-[5/2] overflow-hidden">
+            <Image
+              src={images.storefrontStreet.src}
+              alt={images.storefrontStreet.alt}
+              fill
+              sizes="(min-width: 1024px) 55vw, 100vw"
+              className="object-cover"
+              style={{ objectPosition: images.storefrontStreet.position }}
+            />
+          </Reveal>
         </div>
       </div>
     </section>

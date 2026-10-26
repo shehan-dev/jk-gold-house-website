@@ -27,7 +27,7 @@ export default function JewelleryPage() {
         intro="From everyday gold to heirloom pieces — browse our collections and enquire directly for designs and today’s prices."
         image={images.goldChainsWide}
       />
-      <Collections enquire />
+      <Collections hideViewAll />
       <GoldFeature />
       <Showcase image={images.pendantEarringWide} />
       <PriceEnquiry />

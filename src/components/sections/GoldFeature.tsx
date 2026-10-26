@@ -1,12 +1,11 @@
-import { Phone } from "lucide-react";
 import { MaskImage } from "@/components/motion/MaskImage";
 import { Reveal } from "@/components/motion/Reveal";
 import { GoldLine } from "@/components/motion/GoldLine";
 import { Button } from "@/components/ui/Button";
-import { WhatsAppIcon } from "@/components/ui/BrandIcons";
+import { FacebookIcon } from "@/components/ui/BrandIcons";
 import { Eyebrow } from "@/components/ui/SectionHeading";
 import { images } from "@/lib/images";
-import { messages, telHref, whatsappHref } from "@/lib/site";
+import { site } from "@/lib/site";
 
 export function GoldFeature() {
   return (
@@ -47,15 +46,11 @@ export function GoldFeature() {
           <Reveal delay={0.3} className="mt-10 border border-gold/30 bg-ivory/3 p-6 sm:p-8">
             <GoldLine className="mb-5 w-12" />
             <p className="font-serif text-xl leading-snug text-ivory sm:text-2xl">
-              Gold prices can change daily. For today’s gold prices and current jewellery prices, please contact JK Gold
-              House directly.
+              Gold prices change daily. We post today’s gold price on our Facebook page every day.
             </p>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <Button href={whatsappHref(messages.goldPrice)} icon={<WhatsAppIcon className="size-4" />}>
-                Get Today’s Price
-              </Button>
-              <Button href={telHref} variant="outline-light" icon={<Phone className="size-4" strokeWidth={1.5} />} arrow={false}>
-                Call JK Gold House
+              <Button href={site.social.facebook} icon={<FacebookIcon className="size-4" />}>
+                See Today’s Price
               </Button>
             </div>
           </Reveal>

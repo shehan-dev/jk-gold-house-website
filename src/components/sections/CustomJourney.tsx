@@ -1,13 +1,13 @@
-import Image from "next/image";
+import { PieceGrid } from "@/components/sections/PieceGrid";
 import { Gem, Lightbulb, PenTool, Sparkles } from "lucide-react";
 import { GoldLine } from "@/components/motion/GoldLine";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/Button";
-import { WhatsAppIcon } from "@/components/ui/BrandIcons";
+import { EnquiryIcon } from "@/components/ui/BrandIcons";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { customJourney } from "@/lib/content";
 import { products } from "@/lib/images";
-import { messages, whatsappHref } from "@/lib/site";
+import { messages, enquiryHref } from "@/lib/site";
 
 const stepIcons = [Lightbulb, PenTool, Sparkles, Gem];
 const customPieces = [
@@ -74,27 +74,16 @@ export function CustomJourney() {
           <Reveal>
             <p className="eyebrow text-gold-ink">Made for our customers</p>
           </Reveal>
-          <Stagger className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-6" stagger={0.08}>
-            {customPieces.map((img) => (
-              <StaggerItem key={img.src}>
-                <div className="group relative aspect-[4/5] overflow-hidden bg-taupe">
-                  <Image
-                    src={img.src}
-                    alt={img.alt}
-                    fill
-                    sizes="(min-width: 1024px) 15vw, (min-width: 768px) 30vw, 48vw"
-                    className="object-cover transition-transform duration-1400 ease-luxe group-hover:scale-[1.05]"
-                    style={{ objectPosition: img.position }}
-                  />
-                </div>
-              </StaggerItem>
-            ))}
-          </Stagger>
+          <PieceGrid
+            pieces={customPieces}
+            label="Custom Designs"
+            className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-6"
+          />
         </div>
 
         <Reveal delay={0.2} className="mt-16 flex flex-col items-start gap-4 border-t border-obsidian/10 pt-10 sm:flex-row sm:items-center sm:justify-between">
           <p className="max-w-lg font-serif text-2xl leading-snug">Bring a sketch, a photo or simply an idea — we’ll take it from there.</p>
-          <Button href={whatsappHref(messages.custom)} variant="dark" icon={<WhatsAppIcon className="size-4" />}>
+          <Button href={enquiryHref(messages.custom)} variant="dark" icon={<EnquiryIcon className="size-4" />}>
             Bring Your Idea to Life
           </Button>
         </Reveal>

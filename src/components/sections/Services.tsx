@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { services, type Service } from "@/lib/content";
-import { messages, whatsappHref } from "@/lib/site";
+import { messages, enquiryHref } from "@/lib/site";
 
 const icons: Record<Service["icon"], LucideIcon> = {
   repair: Hammer,
@@ -80,7 +80,7 @@ function ServiceCard({ service }: { service: Service }) {
             {service.description}
           </p>
           <a
-            href={whatsappHref(messages.service(service.title))}
+            href={enquiryHref(messages.service(service.title))}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-5 inline-flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-gold-ink"

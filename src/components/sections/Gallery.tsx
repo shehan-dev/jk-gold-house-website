@@ -7,8 +7,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Reveal } from "@/components/motion/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
-import { gallery, galleryCategories, type GalleryItem } from "@/lib/content";
-import { setScrollLocked } from "@/components/layout/Providers";
+import { filterLabel, gallery, galleryFilters, type GalleryFilter, type GalleryItem } from "@/lib/content";
+import type { SiteImage } from "@/lib/images";
+import { setScrollLocked, smoothScrollTo } from "@/components/layout/Providers";
 
 const shapes: Record<GalleryItem["shape"], string> = {
   portrait: "aspect-[4/5]",
@@ -20,15 +21,39 @@ const shapes: Record<GalleryItem["shape"], string> = {
 const PAGE_SIZE = 16;
 
 /** `limit` shows a fixed preview (home page); otherwise images load in pages of 16. */
+type FilterSlug = GalleryFilter | "all";
+const isFilter = (v: string | null): v is FilterSlug => !!v && galleryFilters.some((f) => f.slug === v);
+
 export function Gallery({ limit, filters = true }: { limit?: number; filters?: boolean }) {
-  const [category, setCategory] = useState<(typeof galleryCategories)[number]>("All");
+  const [category, setCategory] = useState<FilterSlug>("all");
   const [visible, setVisible] = useState(PAGE_SIZE);
   const [lightbox, setLightbox] = useState<number | null>(null);
 
+  // Arriving from a collection tile (/gallery?filter=rings): select that filter and scroll to the photos
+  useEffect(() => {
+    if (!filters) return;
+    const requested = new URLSearchParams(window.location.search).get("filter");
+    if (!isFilter(requested) || requested === "all") return;
+    setCategory(requested);
+    const id = window.setTimeout(() => smoothScrollTo("#gallery"), 200);
+    return () => window.clearTimeout(id);
+  }, [filters]);
+
+  const selectFilter = (slug: FilterSlug) => {
+    setCategory(slug);
+    setVisible(PAGE_SIZE);
+    // Keep the address bar in sync so a filtered view can be shared
+    const url = new URL(window.location.href);
+    if (slug === "all") url.searchParams.delete("filter");
+    else url.searchParams.set("filter", slug);
+    window.history.replaceState(window.history.state, "", url);
+  };
+
   const filtered = useMemo(
-    () => (category === "All" ? gallery : gallery.filter((g) => g.category === category)),
+    () => (category === "all" ? gallery : gallery.filter((g) => g.tags.includes(category))),
     [category],
   );
+  const lightboxItems = useMemo(() => filtered.map((g) => ({ ...g, label: filterLabel(g.tags[0]) })), [filtered]);
   const items = filtered.slice(0, limit ?? visible);
   const hasMore = !limit && items.length < filtered.length;
 
@@ -40,22 +65,19 @@ export function Gallery({ limit, filters = true }: { limit?: number; filters?: b
         {filters && (
           <Reveal delay={0.2} className="mt-10">
             <div role="group" aria-label="Filter gallery" className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5 pb-2 sm:mx-0 sm:flex-wrap sm:px-0">
-              {galleryCategories.map((c) => (
+              {galleryFilters.map(({ slug, label }) => (
                 <button
-                  key={c}
+                  key={slug}
                   type="button"
-                  onClick={() => {
-                    setCategory(c);
-                    setVisible(PAGE_SIZE);
-                  }}
-                  aria-pressed={category === c}
+                  onClick={() => selectFilter(slug)}
+                  aria-pressed={category === slug}
                   className={`shrink-0 border px-4 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.18em] transition-colors duration-500 ${
-                    category === c
+                    category === slug
                       ? "border-obsidian bg-obsidian text-ivory"
                       : "border-obsidian/15 text-stone hover:border-gold hover:text-obsidian"
                   }`}
                 >
-                  {c}
+                  {label}
                 </button>
               ))}
             </div>
@@ -89,7 +111,7 @@ export function Gallery({ limit, filters = true }: { limit?: number; filters?: b
                   />
                   <span aria-hidden className="absolute inset-0 bg-obsidian/0 transition-colors duration-700 group-hover:bg-obsidian/25" />
                   <span className="eyebrow absolute bottom-3 left-3 translate-y-2 text-[0.55rem] text-ivory opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                    {item.category}
+                    {filterLabel(item.tags[0])}
                   </span>
                 </button>
               </motion.li>
@@ -122,20 +144,23 @@ export function Gallery({ limit, filters = true }: { limit?: number; filters?: b
 
       <AnimatePresence>
         {lightbox !== null && (
-          <Lightbox items={filtered} index={lightbox} onIndex={setLightbox} onClose={() => setLightbox(null)} />
+          <Lightbox items={lightboxItems} index={lightbox} onIndex={setLightbox} onClose={() => setLightbox(null)} />
         )}
       </AnimatePresence>
     </section>
   );
 }
 
-function Lightbox({
+export type LightboxItem = SiteImage & { label?: string };
+
+/** Full-screen image panel with keyboard and button navigation. */
+export function Lightbox({
   items,
   index,
   onIndex,
   onClose,
 }: {
-  items: GalleryItem[];
+  items: LightboxItem[];
   index: number;
   onIndex: (i: number) => void;
   onClose: () => void;
@@ -180,7 +205,12 @@ function Lightbox({
     >
       <div className="flex items-center justify-between px-5 py-4 text-ivory sm:px-8" onClick={(e) => e.stopPropagation()}>
         <p className="eyebrow text-gold">
-          {item.category} <span className="ml-3 text-taupe/70">{index + 1} / {items.length}</span>
+          {item.label}{" "}
+          {items.length > 1 && (
+            <span className="ml-3 text-taupe/70">
+              {index + 1} / {items.length}
+            </span>
+          )}
         </p>
         <button
           ref={closeRef}
@@ -207,12 +237,16 @@ function Lightbox({
           </motion.div>
         </AnimatePresence>
 
-        <LightboxNav side="left" onClick={prev} label="Previous image">
-          <ChevronLeft className="size-5" strokeWidth={1.25} />
-        </LightboxNav>
-        <LightboxNav side="right" onClick={next} label="Next image">
-          <ChevronRight className="size-5" strokeWidth={1.25} />
-        </LightboxNav>
+        {items.length > 1 && (
+          <>
+            <LightboxNav side="left" onClick={prev} label="Previous image">
+              <ChevronLeft className="size-5" strokeWidth={1.25} />
+            </LightboxNav>
+            <LightboxNav side="right" onClick={next} label="Next image">
+              <ChevronRight className="size-5" strokeWidth={1.25} />
+            </LightboxNav>
+          </>
+        )}
       </div>
       <p className="px-5 pb-6 text-center text-sm text-taupe sm:px-8" onClick={(e) => e.stopPropagation()}>
         {item.alt}

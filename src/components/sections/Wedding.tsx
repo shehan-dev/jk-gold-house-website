@@ -2,11 +2,11 @@ import { MaskImage } from "@/components/motion/MaskImage";
 import { Parallax } from "@/components/motion/Parallax";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/Button";
-import { WhatsAppIcon } from "@/components/ui/BrandIcons";
+import { EnquiryIcon } from "@/components/ui/BrandIcons";
 import { Eyebrow } from "@/components/ui/SectionHeading";
 import { weddingFeatures } from "@/lib/content";
 import { images, products } from "@/lib/images";
-import { messages, whatsappHref } from "@/lib/site";
+import { messages, enquiryHref } from "@/lib/site";
 import Image from "next/image";
 
 export function Wedding({ onWeddingPage = false }: { onWeddingPage?: boolean }) {
@@ -15,7 +15,7 @@ export function Wedding({ onWeddingPage = false }: { onWeddingPage?: boolean }) 
       <div className="container-luxe grid items-center gap-16 lg:grid-cols-12 lg:gap-14">
         <div className="relative lg:col-span-6">
           <MaskImage
-            image={images.necklaceWhite}
+            image={products.bridalNecklace}
             sizes="(min-width: 1024px) 48vw, 100vw"
             direction="right"
             className="aspect-[4/5] w-full"
@@ -24,12 +24,12 @@ export function Wedding({ onWeddingPage = false }: { onWeddingPage?: boolean }) 
           <div className="absolute -bottom-10 -left-4 hidden w-[42%] border-[6px] border-ivory shadow-2xl sm:block lg:-left-10">
             <Parallax className="aspect-square" axis="x" distance={10}>
               <Image
-                src={products.twoToneCoupleRings.src}
-                alt={products.twoToneCoupleRings.alt}
+                src={products.stoneWeddingBands.src}
+                alt={products.stoneWeddingBands.alt}
                 fill
                 sizes="20vw"
                 className="object-cover"
-                style={{ objectPosition: products.twoToneCoupleRings.position }}
+                style={{ objectPosition: products.stoneWeddingBands.position }}
               />
             </Parallax>
           </div>
@@ -62,7 +62,7 @@ export function Wedding({ onWeddingPage = false }: { onWeddingPage?: boolean }) 
 
           <Reveal delay={0.3} className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             {onWeddingPage ? (
-              <Button href={whatsappHref(messages.category("wedding jewellery"))} variant="dark" icon={<WhatsAppIcon className="size-4" />}>
+              <Button href={enquiryHref(messages.category("wedding jewellery"))} variant="dark" icon={<EnquiryIcon className="size-4" />}>
                 Enquire About Wedding Jewellery
               </Button>
             ) : (
@@ -70,7 +70,7 @@ export function Wedding({ onWeddingPage = false }: { onWeddingPage?: boolean }) 
                 Explore Wedding Jewellery
               </Button>
             )}
-            <Button href={whatsappHref(messages.wedding)} variant="outline-dark">
+            <Button href={enquiryHref(messages.wedding)} variant="outline-dark">
               Plan Your Jewellery With Us
             </Button>
           </Reveal>

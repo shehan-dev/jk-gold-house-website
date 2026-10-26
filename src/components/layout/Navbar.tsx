@@ -6,8 +6,8 @@ import { AnimatePresence, motion } from "motion/react";
 import { MapPin, Menu, Phone, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { LogoCompact } from "@/components/ui/Logo";
-import { FacebookIcon, InstagramIcon, TikTokIcon, WhatsAppIcon } from "@/components/ui/BrandIcons";
-import { messages, navLinks, site, telHref, whatsappHref } from "@/lib/site";
+import { EnquiryIcon, FacebookIcon, InstagramIcon, TikTokIcon } from "@/components/ui/BrandIcons";
+import { enquiryHref, messages, navLinks, site, telHref, whatsappEnabled } from "@/lib/site";
 import { setScrollLocked } from "./Providers";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -83,12 +83,12 @@ export function Navbar() {
 
           <div className="flex items-center gap-3">
             <a
-              href={whatsappHref(messages.general)}
+              href={enquiryHref(messages.general)}
               target="_blank"
               rel="noopener noreferrer"
               className="group hidden items-center gap-2.5 border border-gold/60 px-5 py-2.5 text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-ivory transition-all duration-500 ease-luxe hover:border-gold hover:bg-gold hover:text-obsidian sm:inline-flex"
             >
-              <WhatsAppIcon className="size-4 text-gold transition-colors group-hover:text-obsidian" />
+              <EnquiryIcon className="size-4 text-gold transition-colors group-hover:text-obsidian" />
               Enquire
             </a>
             <button
@@ -165,12 +165,12 @@ function MobileMenu({ pathname, onClose }: { pathname: string; onClose: () => vo
         >
           <div className="grid gap-3 sm:grid-cols-2">
             <a
-              href={whatsappHref(messages.general)}
+              href={enquiryHref(messages.general)}
               target="_blank"
               rel="noopener noreferrer"
               className="flex min-h-14 items-center justify-center gap-3 bg-gold text-xs font-semibold uppercase tracking-[0.2em] text-obsidian"
             >
-              <WhatsAppIcon className="size-5" /> WhatsApp Us
+              <EnquiryIcon className="size-5" /> {whatsappEnabled ? "WhatsApp Us" : "Message Us"}
             </a>
             <a
               href={telHref}

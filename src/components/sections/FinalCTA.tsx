@@ -4,7 +4,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import { GoldLine } from "@/components/motion/GoldLine";
 import { Button } from "@/components/ui/Button";
 import { images } from "@/lib/images";
-import { messages, whatsappHref } from "@/lib/site";
+import { messages, enquiryHref } from "@/lib/site";
 
 export function FinalCTA() {
   return (
@@ -35,7 +35,7 @@ export function FinalCTA() {
         </Reveal>
         <Reveal delay={0.35} className="mt-12 flex flex-col justify-center gap-3 sm:flex-row">
           <Button href="/jewellery">Explore Jewellery</Button>
-          <Button href={whatsappHref(messages.general)} variant="outline-light">
+          <Button href={enquiryHref(messages.general)} variant="outline-light">
             Contact JK Gold House
           </Button>
         </Reveal>

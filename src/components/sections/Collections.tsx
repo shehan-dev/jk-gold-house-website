@@ -4,8 +4,8 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { featuredCollections, moreCollections, type Collection } from "@/lib/content";
-import { messages, whatsappHref } from "@/lib/site";
+import { featuredCollections, galleryHref, moreCollections, textCollections, type Collection } from "@/lib/content";
+import { enquiryChannel, enquiryHref, messages } from "@/lib/site";
 
 // Editorial layout: one large feature, two medium, then smaller tiles
 const tileLayout = [
@@ -20,10 +20,10 @@ const tileLayout = [
 ];
 
 /**
- * `enquire` — tiles open a WhatsApp enquiry (used on the Jewellery page);
- * otherwise tiles lead to the Jewellery page.
+ * Every category tile opens the gallery with that category's filter selected.
+ * `hideViewAll` hides the "View all collections" button (used on the Jewellery page itself).
  */
-export function Collections({ enquire = false, showMore = true }: { enquire?: boolean; showMore?: boolean }) {
+export function Collections({ hideViewAll = false, showMore = true }: { hideViewAll?: boolean; showMore?: boolean }) {
   return (
     <section id="collections" className="bg-ivory py-24 sm:py-32 lg:py-40">
       <div className="container-luxe">
@@ -33,7 +33,7 @@ export function Collections({ enquire = false, showMore = true }: { enquire?: bo
             title="Discover Our Jewellery"
             intro="Timeless pieces for everyday elegance, meaningful occasions and moments worth remembering."
           />
-          {!enquire && (
+          {!hideViewAll && (
             <Reveal delay={0.2}>
               <Button href="/jewellery" variant="outline-dark">
                 View all collections
@@ -44,8 +44,8 @@ export function Collections({ enquire = false, showMore = true }: { enquire?: bo
 
         <Stagger className="mt-16 grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2 lg:grid-cols-12" stagger={0.08}>
           {featuredCollections.map((c, i) => (
-            <StaggerItem key={c.slug} className={`relative ${tileLayout[i]}`}>
-              <CollectionTile collection={c} large={i === 0} enquire={enquire} />
+            <StaggerItem key={c.name} className={`relative ${tileLayout[i]}`}>
+              <CollectionTile collection={c} large={i === 0} />
             </StaggerItem>
           ))}
         </Stagger>
@@ -61,30 +61,22 @@ export function Collections({ enquire = false, showMore = true }: { enquire?: bo
 
             {/* Smaller image tiles */}
             <Stagger className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-5" stagger={0.07}>
-              {moreCollections
-                .filter((c) => c.image)
-                .map((c, i, all) => (
+              {moreCollections.map((c, i, all) => (
                   // An odd last tile spans the full width on phones
                   <StaggerItem key={c.name} className={all.length % 2 === 1 && i === all.length - 1 ? "col-span-2 md:col-span-1" : ""}>
-                    <a
-                      href={whatsappHref(messages.category(c.name))}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Enquire about ${c.name} on WhatsApp`}
-                      className="group block"
-                    >
+                    <Link href={galleryHref(c.filter)} aria-label={`View ${c.name} in the gallery`} className="group block">
                       <span
                         className={`relative block overflow-hidden bg-taupe ${
                           all.length % 2 === 1 && i === all.length - 1 ? "aspect-[16/10] md:aspect-[4/5]" : "aspect-[4/5]"
                         }`}
                       >
                         <Image
-                          src={c.image!.src}
-                          alt={c.image!.alt}
+                          src={c.image.src}
+                          alt={c.image.alt}
                           fill
                           sizes="(min-width: 1024px) 18vw, (min-width: 768px) 30vw, 48vw"
                           className="object-cover transition-transform duration-1400 ease-luxe group-hover:scale-[1.05]"
-                          style={{ objectPosition: c.image!.position }}
+                          style={{ objectPosition: c.image.position }}
                         />
                       </span>
                       <span className="mt-4 flex items-start justify-between gap-3">
@@ -100,19 +92,17 @@ export function Collections({ enquire = false, showMore = true }: { enquire?: bo
                           aria-hidden
                         />
                       </span>
-                    </a>
+                    </Link>
                   </StaggerItem>
                 ))}
             </Stagger>
 
             {/* Collections without photography yet */}
             <ul className="mt-12 border-t border-obsidian/10">
-              {moreCollections
-                .filter((c) => !c.image)
-                .map((c) => (
+              {textCollections.map((c) => (
                   <li key={c.name} className="border-b border-obsidian/10">
                     <a
-                      href={whatsappHref(messages.category(c.name))}
+                      href={enquiryHref(messages.category(c.name))}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="group flex items-center justify-between gap-6 py-5"
@@ -128,7 +118,7 @@ export function Collections({ enquire = false, showMore = true }: { enquire?: bo
                         strokeWidth={1.25}
                         aria-hidden
                       />
-                      <span className="sr-only">(enquire on WhatsApp)</span>
+                      <span className="sr-only">(enquire on {enquiryChannel})</span>
                     </a>
                   </li>
                 ))}
@@ -140,9 +130,13 @@ export function Collections({ enquire = false, showMore = true }: { enquire?: bo
   );
 }
 
-function CollectionTile({ collection, large, enquire }: { collection: Collection; large: boolean; enquire: boolean }) {
-  const content = (
-    <>
+function CollectionTile({ collection, large }: { collection: Collection; large: boolean }) {
+  return (
+    <Link
+      href={galleryHref(collection.filter)}
+      aria-label={`View ${collection.name} in the gallery`}
+      className="group absolute inset-0 block overflow-hidden bg-espresso"
+    >
       <Image
         src={collection.image.src}
         alt={collection.image.alt}
@@ -157,34 +151,14 @@ function CollectionTile({ collection, large, enquire }: { collection: Collection
       />
       <div aria-hidden className="absolute inset-0 bg-obsidian/0 transition-colors duration-700 group-hover:bg-obsidian/20" />
       <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
-        <p className="eyebrow text-[0.6rem] text-gold/80 transition-colors duration-500 group-hover:text-gold-bright">
-          {enquire ? "Enquire" : "Collection"}
-        </p>
+        <p className="eyebrow text-[0.6rem] text-gold/80 transition-colors duration-500 group-hover:text-gold-bright">Collection</p>
         <h3 className={`mt-2 text-ivory ${large ? "text-4xl sm:text-5xl" : "text-3xl"}`}>{collection.name}</h3>
         <p className="mt-2 max-w-sm text-sm leading-relaxed text-ivory/75">{collection.description}</p>
         <span className="mt-5 inline-flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-ivory">
-          {enquire ? "Enquire" : "Explore"}
+          Explore
           <ArrowRight className="size-4 text-gold transition-transform duration-500 ease-luxe group-hover:translate-x-1.5" strokeWidth={1.5} aria-hidden />
         </span>
       </div>
-    </>
-  );
-
-  const className = "group absolute inset-0 block overflow-hidden bg-espresso";
-
-  return enquire ? (
-    <a
-      href={whatsappHref(messages.category(collection.name))}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={className}
-      aria-label={`Enquire about ${collection.name} on WhatsApp`}
-    >
-      {content}
-    </a>
-  ) : (
-    <Link href="/jewellery" className={className}>
-      {content}
     </Link>
   );
 }

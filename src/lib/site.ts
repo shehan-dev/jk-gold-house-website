@@ -48,9 +48,23 @@ export const site = {
 
 export const telHref = `tel:${site.phoneE164}`;
 
+/**
+ * WhatsApp is temporarily switched off. Set to `true` to bring back every
+ * WhatsApp button, number and the floating chat button across the site.
+ * While off, enquiry buttons open Facebook Messenger instead.
+ */
+export const whatsappEnabled = false;
+
 export function whatsappHref(message = "Hello JK Gold House, I would like to make an enquiry.") {
   return `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(message)}`;
 }
+
+/** Where "Enquire" buttons lead: WhatsApp (with a pre-filled message) when enabled, otherwise Messenger. */
+export function enquiryHref(message?: string) {
+  return whatsappEnabled ? whatsappHref(message) : site.messenger;
+}
+
+export const enquiryChannel = whatsappEnabled ? "WhatsApp" : "Messenger";
 
 export const messages = {
   general: "Hello JK Gold House, I would like to make an enquiry.",
