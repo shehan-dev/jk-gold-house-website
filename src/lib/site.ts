@@ -8,8 +8,8 @@ export const site = {
   tagline: "Celebrating Life’s Moments in Gold",
   description:
     "JK Gold House is a trusted family jewellery house in Negombo, Sri Lanka, with over 35 years of experience in genuine 22K and 18K gold jewellery, wedding jewellery, engagement rings and custom designs.",
-  // Set NEXT_PUBLIC_SITE_URL to the live domain when deploying
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  // Live domain. NEXT_PUBLIC_SITE_URL can override it (e.g. for a staging deployment).
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://jkgoldhouse.lk",
   yearsOfExperience: 35,
 
   phoneDisplay: "+94 312 220 175",
